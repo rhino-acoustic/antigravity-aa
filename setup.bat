@@ -10,7 +10,7 @@ echo   CDP Port 9000 Configuration
 echo  ============================================
 echo.
 
-:: ── argv.json CDP port auto-config ──
+:: ── 1. argv.json CDP port auto-config ──
 set "AG_DIR=%USERPROFILE%\.antigravity"
 set "ARGV_JSON=%AG_DIR%\argv.json"
 
@@ -35,8 +35,13 @@ if %errorlevel% neq 0 (
         "}"
     echo [SETUP] OK - argv.json patched
 ) else (
-    echo [SETUP] OK - CDP port 9000 already configured
+    echo [SETUP] OK - CDP port 9000 already in argv.json
 )
+
+:: ── 2. Patch all Antigravity shortcuts (.lnk) ──
+echo.
+echo [SETUP] Scanning Antigravity shortcuts...
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0patch_shortcuts.ps1"
 
 echo.
 echo [SETUP] Done. Restart Antigravity for changes to take effect.
